@@ -33,8 +33,8 @@ export default {
                 }
 
                 if (this.isTyping) return;
-
-                const span = this.$refs['itemText-' + this.typingIndex][0];
+                const span = this.$refs['itemText-' + this.typingIndex];
+                console.log(span);
                 const text = this.items[this.typingIndex];
                 this.typeText(span, text, this.typingIndex);
 
@@ -82,7 +82,7 @@ export default {
         </div>
         <div>
             <ul class="font-semibold lg:text-4xl text-gray-300 lg:ml-28 text-3xl">
-                <li v-for="(index) in items" :key="index" class="mb-6">
+                <li v-for="(item, index) in items" :key="index" class="mb-6">
                     <span :ref="'itemText-' + index" class="typed-text">{{ typedItems[index] }}</span>
                 </li>
             </ul>

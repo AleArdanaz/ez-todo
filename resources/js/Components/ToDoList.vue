@@ -79,7 +79,7 @@ export default {
             el.selectionStart = el.selectionEnd = el.value.length;
             el.focus();
         },
-        toggleAlert(response) {
+        toggleAlert() {
                 this.showConfirmationDeleteList = true;
         },
         closeModal() {
@@ -106,7 +106,7 @@ export default {
                 task.order = index + 1;
             });
         },
-        handleEnterKey(event) {
+        handleEnterKey() {
             this.addTask();
         },
         handleKeyboardShortcuts(event) {
@@ -136,6 +136,7 @@ export default {
                 <h1 v-if="!editList" class="font-medium text-3xl text-gray-800 dark:text-gray-100"> {{ list.name }} </h1>
                 <input class="rounded bg-gray-200 text-gray-600 dark:bg-slate-500 dark:text-gray-100" :id="'list-' + list.id" v-if="editList" type="text" v-model="list.name">
                 <div class="flex items-center">
+                    <icon-w-tooltip class="mr-5" v-if="editList" iconType="trash" tooltipmsg="Delete" @click="toggleAlert('success')" />
                     <icon-w-tooltip v-if="!editList" iconType="lock" tooltipmsg="Edit" @click="editMode" />
                     <icon-w-tooltip class="animate-pulse button-scale-animation" v-if="editList" iconType="lock-open" tooltipmsg="Save changes" @click="editMode" />
                 </div>
@@ -145,7 +146,7 @@ export default {
             <div v-if="list.tasks">
                 <draggable v-model="list.tasks" class="w-full" item-key="id" @end="updateOrder" :disabled="!editList" handle=".handle">
                     <template #item="{element}">
-                        <div class="duration-200 py-2 mr-5 font-normal text-xl flex items-center border-2 rounded my-3 p-5 w-full hover:bg-gray-200 z-10 dark:hover:bg-slate-600">
+                        <div class="duration-200 py-2 mr-5 font-normal text-xl flex items-center border-2 rounded my-3 p-5 w-full hover:bg-gray-200 z-10 dark:hover:bg-slate-700">
                             <div class="flex flex-row items-center w-1/2 justify-start">
                                 <!-- Check Icon -->
                                 <div v-if="!editList">
@@ -173,10 +174,10 @@ export default {
                                     <input class="rounded bg-gray-200 text-gray-600 dark:bg-slate-500 dark:text-gray-100" :id="'task-' + element.id" v-if="editList" type="text" v-model="element.name" @keydown.enter="handleEnterKey(index)">
                                 </div>
                             </div>
-                            <div class="w-1/4 flex justify-center">
-                                <p v-show="element.order <= 2">🔥</p>
-                                <p v-show="element.order <= 5 && element.order > 2">👀</p>
-                                <p v-show="element.order <= 8 && element.order > 5">😎</p>
+                            <div class="w-1/4 flex justify-center text-red-500">
+                                <p v-show="element.order <= 2" class="text-red-400 text-base">High</p>
+                                <p v-show="element.order <= 5 && element.order > 2" class="text-yellow-300 text-base">Mid</p>
+                                <p v-show="element.order <= 8 && element.order > 5" class="text-green-400 text-base">Low</p>
                             </div>
                             <!-- Actions -->
                             <div v-show="editList" class="actions flex flex-row w-1/4 justify-end items-center">
@@ -195,9 +196,6 @@ export default {
                     </div>
                 </div>
             </div>
-        </div>
-        <div v-if="editList" @click="toggleAlert('success')" class="absolute text-red-500 border-dotted border-red-500 border-2 rounded px-6 py-3 cursor-pointer delete-list">
-            <p>Delete</p>
         </div>
         <Modal :show="showConfirmationDeleteList" @close="closeModal">
             <div class="p-6 dark:bg-slate-700 dark:border-slate-700">

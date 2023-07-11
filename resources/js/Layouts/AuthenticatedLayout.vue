@@ -18,9 +18,9 @@ const toogleAlert= () => {
             showAlert = false;
         }, 2000);
     }
-} 
+}
 
-isDark.value = localStorage.getItem("darkMode") == "true";
+isDark.value = localStorage.getItem("darkMode") === "true";
 
 const toggleDarkMode = () => {
     console.log(isDark.value);
@@ -32,8 +32,8 @@ const toggleDarkMode = () => {
 
 <template>
     <div :class="{ dark: isDark }">
-        <div class="min-h-screen bg-gray-100 dark:bg-slate-800">
-            <nav class="bg-white border-b border-gray-100 dark:bg-slate-600 dark:border-slate-700">
+        <div class="min-h-screen bg-gray-100 dark:bg-slate-900">
+            <nav class="bg-white border-b border-gray-100 dark:bg-slate-700 dark:border-slate-800">
                 <!-- Primary Navigation Menu -->
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex justify-between h-16">
@@ -136,7 +136,7 @@ const toggleDarkMode = () => {
             </nav>
 
             <!-- Page Heading -->
-            <header class="bg-white shadow dark:bg-slate-700" v-if="$slots.header">
+            <header class="bg-white shadow dark:bg-slate-800" v-if="$slots.header">
                 <div class="max-w-7xl mx-auto">
                     <slot name="header" />
                 </div>

@@ -45,7 +45,7 @@ class ListsController extends Controller
             'due_date' => null,
             'remind_at' => null,
             'notes' => null,
-            'priority' => 0,
+            'priority' => 1,
         ]);
 
         $list->tasks = [$task];

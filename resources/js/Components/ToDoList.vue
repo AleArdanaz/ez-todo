@@ -175,9 +175,18 @@ export default {
                                 </div>
                             </div>
                             <div class="w-1/4 flex justify-center text-red-500">
-                                <p v-show="element.order <= 2" class="text-red-400 text-base">High</p>
-                                <p v-show="element.order <= 5 && element.order > 2" class="text-yellow-300 text-base">Mid</p>
-                                <p v-show="element.order <= 8 && element.order > 5" class="text-green-400 text-base">Low</p>
+                                <div v-if="!editList">
+                                    <p v-show="element.priority === '1'" class="text-red-400 text-base">High</p>
+                                    <p v-show="element.priority === '2'" class="text-yellow-300 text-base">Mid</p>
+                                    <p v-show="element.priority === '3'" class="text-green-400 text-base">Low</p>
+                                </div>
+                                <div v-if="editList">
+                                    <select class="rounded bg-gray-200 text-gray-600 dark:bg-slate-500 dark:text-gray-100" v-model="element.priority" name="" id="">
+                                        <option value="1" class="text-red-400">High</option>
+                                        <option value="2" class="text-yellow-300">Mid</option>
+                                        <option value="3" class="text-green-400">Low</option>
+                                    </select>
+                                </div>
                             </div>
                             <!-- Actions -->
                             <div v-show="editList" class="actions flex flex-row w-1/4 justify-end items-center">
